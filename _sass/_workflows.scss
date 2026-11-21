@@ -1,7 +1,8 @@
 /* Workflow plan */
 .plan-head { max-width: 44rem; margin-bottom: 3rem; }
 .plan-head h2 + p { margin-top: 1.1rem; color: var(--muted); font-size: 1.25rem; line-height: 1.5; }
-.groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem 4rem; align-items: start; }
+.groups { columns: 2; column-gap: 4rem; }
+.groups .group { break-inside: avoid; margin-bottom: 3rem; }
 .group h3 { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-strong); }
 .group .count { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.08em; color: var(--subtle); }
 .group ul { list-style: none; margin: 0; padding: 0; }
@@ -10,7 +11,8 @@
 .group li span { color: var(--muted); }
 
 @media (max-width: 52rem) {
-  .groups { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .groups { columns: 1; }
+  .groups .group { margin-bottom: 2.5rem; }
   .group li { grid-template-columns: minmax(0, 1fr); }
 }
 
@@ -23,7 +25,7 @@
 .group summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 @media (max-width: 52rem) {
   .group:not([open]) h3 { border-bottom-color: var(--border); }
-  .groups { gap: 0; }
+  .groups .group { margin-bottom: 0; }
   .group h3 { padding-top: 1rem; padding-bottom: 1rem; }
   .group[open] ul { margin-bottom: 1.5rem; }
 }

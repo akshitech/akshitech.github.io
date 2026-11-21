@@ -41,6 +41,16 @@
       does: "Remittance forms and CA certificates drafted from documents"
     - name: "Transfer pricing documentation"
       does: "Benchmarking and study drafts"
+- area: "Accounting"
+  items:
+    - name: "Monthly management reports"
+      does: "Client reports from the books"
+    - name: "Bank statement and invoice entry"
+      does: "Entries prepared for Tally"
+    - name: "Bank reconciliation"
+      does: "Bank matched to books"
+    - name: "Payroll compliance"
+      does: "PF, ESI and professional tax filings"
 - area: "Audit and assurance"
   items:
     - name: "Ledger scrutiny"
@@ -65,16 +75,6 @@
       does: "The yearly forms, prepared"
     - name: "Registers, minutes and event filings"
       does: "Routine secretarial records"
-- area: "Accounting"
-  items:
-    - name: "Monthly management reports"
-      does: "Client reports from the books"
-    - name: "Bank statement and invoice entry"
-      does: "Entries prepared for Tally"
-    - name: "Bank reconciliation"
-      does: "Bank matched to books"
-    - name: "Payroll compliance"
-      does: "PF, ESI and professional tax filings"
 - area: "Certificates and advisory"
   items:
     - name: "Certificates"

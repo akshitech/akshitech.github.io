@@ -7,12 +7,11 @@
   mask-image: radial-gradient(ellipse 70% 80% at 75% 30%, #000 20%, transparent 75%); }
 .hero-grid > div > .eyebrow:first-child::before { content: ""; display: inline-block; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--accent); margin-right: 0.6rem; vertical-align: 0.1em; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3.5rem; align-items: center; }
-.hero.plain .hero-grid { grid-template-columns: minmax(0, 1fr); }
-.hero.plain .hero-grid > div { max-width: 50rem; }
 .lede { font-size: 1.25rem; line-height: 1.5; color: var(--muted); margin: 1.5rem 0 2rem; max-width: 38rem; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; }
 
-/* Stacked on tablets and phones, the hero card keeps a readable width */
-@media (max-width: 52rem) {
-  .hero-grid > .sheet, .hero-grid > .channels { max-width: 38rem; }
+
+/* The hero stacks below 960px, so its card is never squeezed beside the text */
+@media (max-width: 60rem) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
 }
