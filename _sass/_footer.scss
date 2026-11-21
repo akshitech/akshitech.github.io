@@ -1,5 +1,5 @@
 /* Footer: brand, links and contact in columns, the legal line below */
-.foot { border-top: 1px solid var(--border); padding: 3.5rem 0 2rem; color: var(--muted); font-size: 0.9375rem; }
+.foot { border-top: 1px solid var(--border); padding: 3.5rem 0 2.5rem; color: var(--muted); font-size: 0.9375rem; }
 .foot a { text-decoration: none; }
 .foot a:hover { color: var(--primary); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 2.5rem 6rem; }
@@ -8,14 +8,20 @@
 .foot-head { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); margin: 0 0 1rem; }
 .foot-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; justify-items: start; }
 .foot-contact { display: grid; gap: 0.6rem; justify-items: start; }
-.foot-contact a { color: var(--text); }
-.foot-legal { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--subtle); font-size: 0.8125rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
+.foot-legal { margin-top: 3rem; padding-top: 1.5rem; align-items: baseline; border-top: 1px solid var(--border); color: var(--subtle); font-size: 0.8125rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
+.foot-legal-links { display: flex; gap: 1.5rem; margin-left: auto; }
+/* Phones: the legal row uses the same two columns as Pages and Contact above it */
+@media (max-width: 52rem) {
+  .foot-legal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1.5rem; }
+  .foot-legal > span:first-child { grid-column: 1 / -1; }
+  .foot-legal-links { display: contents; }
+}
 
 @media (max-width: 52rem) {
-  .foot { padding-top: 2.75rem; }
+  .foot { padding-top: 2.75rem; padding-bottom: 3rem; }
   .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 1.5rem; }
   .foot-brand { grid-column: 1 / -1; }
-  .foot-legal { margin-top: 2.25rem; }
+  .foot-legal { margin-top: 2.5rem; }
 }
 
 @media (max-width: 52rem) {

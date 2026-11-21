@@ -18,7 +18,7 @@
   window.matchMedia("(min-width: 56rem)").addEventListener("change", function (m) { if (m.matches) set(false); });
 })();
 
-// Products: on phones the workflow areas start closed so the list scans; on wide screens they stay open.
+// Products: workflow areas start closed on phones so the list scans, and open on wide screens; each can be toggled.
 (function () {
   var groups = document.querySelectorAll(".groups details.group");
   if (!groups.length) return;
@@ -26,7 +26,4 @@
   function apply() { groups.forEach(function (d) { d.open = !narrow.matches; }); }
   apply();
   narrow.addEventListener("change", apply);
-  groups.forEach(function (d) {
-    d.querySelector("summary").addEventListener("click", function (e) { if (!narrow.matches) e.preventDefault(); });
-  });
 })();

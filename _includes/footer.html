@@ -8,10 +8,9 @@
         <nav aria-label="Footer">
           <p class="foot-head">Pages</p>
           <ul class="foot-links">
-{%- for item in site.data.nav %}
+{%- for item in site.data.nav %}{% if item.url != "/" %}
             <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
-{%- endfor %}
-            <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+{%- endif %}{% endfor %}
           </ul>
         </nav>
         <div>
@@ -27,8 +26,7 @@
         <span>&copy; {{ site.time | date: "%Y" }} {{ site.data.contact.legal_name }}</span>
 {%- assign legal_pages = site.pages | where_exp: "p", "p.url == '/privacy/' or p.url == '/terms/'" %}
 {%- if legal_pages.size == 2 %}
-        <a href="{{ '/privacy/' | relative_url }}">Privacy policy</a>
-        <a href="{{ '/terms/' | relative_url }}">Terms of use</a>
+        <span class="foot-legal-links"><a href="{{ '/privacy/' | relative_url }}">Privacy policy</a><a href="{{ '/terms/' | relative_url }}">Terms of use</a></span>
 {%- endif %}
 {%- if site.data.contact.cin != "" %}
         <span>CIN {{ site.data.contact.cin }}</span>

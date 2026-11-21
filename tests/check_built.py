@@ -21,8 +21,8 @@ for d, _, files in os.walk(SITE):
 
 data = open(os.path.join(ROOT, "_data", "workflows.yml"), encoding="utf-8").read()
 total = len(re.findall(r"^\s+- name:", data, re.M))
-nav = open(os.path.join(ROOT, "_data", "nav.yml"), encoding="utf-8").read()
-in_nav = {u.strip("/") for u in re.findall(r"^\s+url:\s*(\S+)", nav, re.M)} | {"contact"}
+nav_data = open(os.path.join(ROOT, "_data", "nav.yml"), encoding="utf-8").read()
+in_nav = {u.strip("/") for u in re.findall(r"^\s+url:\s*(\S+)", nav_data, re.M)} | {"contact"}
 
 titles = {}
 for p in pages:
