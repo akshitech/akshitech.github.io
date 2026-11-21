@@ -21,5 +21,4 @@ exclude:
   - tests/
   - vendor/
   - .ruby-version
-  - .tool-versions
   - design/
