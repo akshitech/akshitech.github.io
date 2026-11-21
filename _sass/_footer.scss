@@ -10,11 +10,12 @@
 .foot-contact { display: grid; gap: 0.6rem; justify-items: start; }
 .foot-legal { margin-top: 3rem; padding-top: 1.5rem; align-items: baseline; border-top: 1px solid var(--border); color: var(--subtle); font-size: 0.8125rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
 .foot-legal-links { display: flex; gap: 1.5rem; margin-left: auto; }
-/* Phones: the legal row uses the same two columns as Pages and Contact above it */
+.foot-legal-links a { color: var(--muted); }
+.foot-legal-links a:hover { color: var(--primary); }
+/* Phones: the two legal links on one line, the copyright line closing the footer below them */
 @media (max-width: 52rem) {
-  .foot-legal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1.5rem; }
-  .foot-legal > span:first-child { grid-column: 1 / -1; }
-  .foot-legal-links { display: contents; }
+  .foot-legal { flex-direction: column-reverse; align-items: flex-start; gap: 0.75rem; }
+  .foot-legal-links { margin-left: 0; }
 }
 
 @media (max-width: 52rem) {
