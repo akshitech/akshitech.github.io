@@ -1,3 +1,4 @@
+# Pinned to ubuntu-24.04: setup-ruby had no prebuilt Ruby for ubuntu-26.04 on 2026-11-21.
 # Builds the site with the Jekyll in the Gemfile, checks it, and deploys it to
 # GitHub Pages from main. Pull requests build and check without deploying.
 name: Build, check and deploy
@@ -22,7 +23,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       AXE_VERSION: 4.10.3
       AXE_SHA256: 880970c081707360e64f34cea25ff91892f5bc95675b0776925b9709dd8a68bb
@@ -62,7 +63,7 @@ jobs:
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
