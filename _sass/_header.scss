@@ -20,7 +20,7 @@
 .site.open .menu-btn .l3 { transform: translateY(-5px) rotate(-45deg); }
 .menu-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
-@media (max-width: 56rem) {
+@media (max-width: 44rem) {
   .site nav { gap: 0.75rem; }
   .js .menu-btn { display: inline-flex; }
   .js .menu { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 0.5rem 1.5rem 1.25rem; background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sheet); }

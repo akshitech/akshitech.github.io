@@ -15,7 +15,7 @@
     if (header.classList.contains("open") && !header.contains(e.target)) set(false);
   });
   header.querySelectorAll(".menu a").forEach(function (a) { a.addEventListener("click", function () { set(false); }); });
-  window.matchMedia("(min-width: 56rem)").addEventListener("change", function (m) { if (m.matches) set(false); });
+  window.matchMedia("(min-width: 44rem)").addEventListener("change", function (m) { if (m.matches) set(false); });
 })();
 
 // Products: workflow areas start closed on phones so the list scans, and open on wide screens; each can be toggled.
