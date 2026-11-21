@@ -21,4 +21,5 @@ exclude:
   - tests/
   - vendor/
   - .ruby-version
-  - CNAME.example
+  - .tool-versions
+  - design/

@@ -50,3 +50,18 @@ uv run --with playwright==1.55.0 python tests/browser_check.py http://127.0.0.1:
 - Add or remove a workflow in `_data/workflows.yml`; counts on every page follow.
 - Pages state products and workflows without "coming soon" or status labels.
 - Illustrations in the hero cards say they are illustrative and use no client data.
+
+## Share image
+
+`og-image.png` (1200x630) is rendered from `design/og-image.html`, which uses the built stylesheet. When the home headline changes, edit that file to match, build, and render it with light mode forced so the logo keeps its dark ink:
+
+```sh
+bundle exec jekyll build
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --user-data-dir="$(mktemp -d)" \
+  --hide-scrollbars --force-device-scale-factor=1 --blink-settings=preferredColorScheme=1 \
+  --window-size=1200,630 --screenshot="$PWD/og-image.png" "file://$PWD/design/og-image.html"
+```
+
+## Fonts
+
+Newsreader and IBM Plex are used under the SIL Open Font License 1.1; the licence texts are in `assets/fonts/`.
