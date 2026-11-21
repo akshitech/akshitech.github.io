@@ -1,0 +1,24 @@
+# akshi.tech, built by GitHub Actions (.github/workflows/pages.yml) with the
+# Jekyll pinned in the Gemfile, not by the github-pages gem.
+title: Akshi
+url: https://akshi.tech
+baseurl: ""
+lang: en
+permalink: pretty
+
+plugins:
+  - jekyll-sitemap
+
+sass:
+  style: compressed
+  quiet_deps: true
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - AGENTS.md
+  - tests/
+  - vendor/
+  - .ruby-version
+  - CNAME.example

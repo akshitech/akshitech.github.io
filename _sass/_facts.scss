@@ -1,0 +1,7 @@
+/* Fact marks: a shape and a label first, a color second */
+.dot { width: 0.75rem; height: 0.75rem; display: inline-block; flex: none; }
+.dot.doc { border-radius: 50%; background: var(--success); }
+.dot.user { border-radius: 50%; border: 0.2rem solid var(--warning); }
+.dot.proof { background: var(--danger); clip-path: polygon(50% 6%, 100% 94%, 0 94%); }
+.dot.unknown { border-radius: 50%; border: 1.5px dashed var(--subtle); }
+.dot.wait { border-radius: 50%; border: 1.5px dashed var(--primary); background: var(--surface); }

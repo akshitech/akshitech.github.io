@@ -1,0 +1,19 @@
+/* Sections */
+.band { border-top: 1px solid var(--border); padding: 4.5rem 0; }
+.split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem 4rem; }
+.split-head h2 + p { margin-top: 1.1rem; color: var(--muted); }
+main > section.band:nth-of-type(odd) { background: var(--bg-subtle); }
+main > section.band:nth-of-type(odd) .card { background: var(--bg); }
+@media (min-width: 52.01rem) {
+  .split-head { position: sticky; top: 6.5rem; align-self: start; }
+}
+.split-body > * + * { margin-top: 1.25rem; }
+.split-body > p { font-size: 1.25rem; line-height: 1.5; }
+.split-body > :is(.list, .facts, .steps) ~ p { font-size: 1rem; line-height: 1.6; color: var(--muted); }
+
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; transition: border-color 150ms ease-out, box-shadow 150ms ease-out; }
+.card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-sheet); }
+.card h3 { font: 500 1.75rem/1.2 var(--display); }
+.card p { margin: 0; color: var(--muted); }
+.card .more { margin-top: auto; padding-top: 0.5rem; }

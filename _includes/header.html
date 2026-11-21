@@ -1,0 +1,14 @@
+  <header class="site">
+    <div class="wrap bar">
+      <a class="brand" href="{{ '/' | relative_url }}" aria-label="Akshi home"><img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="" width="133" height="50"></a>
+      <nav aria-label="Main">
+        <ul class="menu" id="menu">
+{%- for item in site.data.nav %}
+          <li><a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a></li>
+{%- endfor %}
+        </ul>
+        <a class="btn small" href="{{ '/contact/' | relative_url }}"{% if page.url == '/contact/' %} aria-current="page"{% endif %}>Talk to us</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span class="sr">Menu</span><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path class="l1" d="M4 7h16"/><path class="l2" d="M4 12h16"/><path class="l3" d="M4 17h16"/></svg></button>
+      </nav>
+    </div>
+  </header>

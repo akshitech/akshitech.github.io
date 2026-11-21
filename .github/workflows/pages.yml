@@ -1,0 +1,71 @@
+# Builds the site with the Jekyll in the Gemfile, checks it, and deploys it to
+# GitHub Pages from main. Pull requests build and check without deploying.
+name: Build, check and deploy
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+  # Rebuild on 1 January so the footer year moves without a push.
+  schedule:
+    - cron: "30 0 1 1 *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      AXE_VERSION: 4.10.3
+      AXE_SHA256: 880970c081707360e64f34cea25ff91892f5bc95675b0776925b9709dd8a68bb
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@003a5c4d8d6321bd302e38f6f0ec593f77f06600 # v1.319.0
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Build
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+      - name: Check built pages
+        run: python3 tests/check_built.py
+      - name: Check links
+        run: bundle exec htmlproofer _site --disable-external
+      - name: Setup uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - name: Check in a browser
+        run: |
+          curl -sfL "https://cdn.jsdelivr.net/npm/axe-core@${AXE_VERSION}/axe.min.js" -o "$RUNNER_TEMP/axe.min.js"
+          echo "${AXE_SHA256}  $RUNNER_TEMP/axe.min.js" | sha256sum -c -
+          python3 -m http.server 8390 --bind 127.0.0.1 -d _site &
+          sleep 1
+          uv run --with playwright==1.55.0 python tests/browser_check.py http://127.0.0.1:8390 "$RUNNER_TEMP/axe.min.js"
+      - name: Upload artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

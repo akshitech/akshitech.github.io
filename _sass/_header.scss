@@ -1,0 +1,35 @@
+/* Header: sticky, links inline on wide screens, a menu button and panel on narrow ones */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.site { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--border); background: var(--bg); }
+@supports (backdrop-filter: blur(1px)) {
+  .site { background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); }
+}
+[id] { scroll-margin-top: 5.5rem; }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; min-height: 4.5rem; }
+.brand { display: inline-flex; align-items: center; }
+.brand img { display: block; height: 2rem; width: auto; aspect-ratio: 133 / 50; }
+.site nav { display: flex; align-items: center; gap: 1.75rem; font-size: 0.9375rem; }
+.menu { display: flex; align-items: center; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
+.menu a { text-decoration: none; display: inline-block; padding: 0.35rem 0; }
+.menu a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--primary); text-decoration-thickness: 2px; text-underline-offset: 0.5em; }
+.menu-btn { display: none; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; margin-right: -0.5rem; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--text); cursor: pointer; }
+.menu-btn svg { stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; fill: none; }
+.menu-btn path { transition: transform 160ms ease-out, opacity 120ms ease-out; transform-origin: 12px 12px; }
+.site.open .menu-btn .l1 { transform: translateY(5px) rotate(45deg); }
+.site.open .menu-btn .l2 { opacity: 0; }
+.site.open .menu-btn .l3 { transform: translateY(-5px) rotate(-45deg); }
+.menu-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+@media (max-width: 56rem) {
+  .site nav { gap: 0.75rem; }
+  .js .menu-btn { display: inline-flex; }
+  .js .menu { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 0.5rem 1.5rem 1.25rem; background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sheet); }
+  .js .site.open .menu { display: flex; }
+  .js .menu li + li { border-top: 1px solid var(--border); }
+  .js .menu a { display: flex; align-items: center; min-height: 3.25rem; padding: 0.25rem 0; font-size: 1.125rem; }
+  .js .menu a[aria-current="page"] { text-decoration: none; color: var(--primary); font-weight: 600; }
+  .js .menu a[aria-current="page"]::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--accent); margin-right: 0.75rem; }
+  html:not(.js) .bar { flex-wrap: wrap; padding: 0.75rem 0; }
+  html:not(.js) .site nav { flex-wrap: wrap; }
+  html:not(.js) .menu { flex-wrap: wrap; gap: 0.25rem 1.1rem; }
+}

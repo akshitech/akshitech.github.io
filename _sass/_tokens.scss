@@ -1,0 +1,77 @@
+/* Tokens mirror design/akshi-design-system.pen. Components use these names only. */
+:root {
+  --bg: #FFFFFF;
+  --bg-subtle: #F6F7F9;
+  --surface: #FFFFFF;
+  --text: #141C31;
+  --muted: #4C566E;
+  --subtle: #626B81;
+  --border: #DFE2E8;
+  --border-strong: #858DA1;
+  --primary: #3548B0;
+  --primary-hover: #29398F;
+  --on-primary: #FFFFFF;
+  --success: #1F7A54;
+  --warning: #8A5A00;
+  --danger: #B42345;
+  --focus: #4A5FCB;
+  --accent: #D84A1B;
+  --grid-line: rgba(20, 28, 49, 0.06);
+  --shadow-sheet: 0 8px 24px rgba(11, 16, 32, 0.12);
+  --display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --wrap: 68rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0B1020;
+    --bg-subtle: #141C31;
+    --surface: #141C31;
+    --text: #EEF0F4;
+    --muted: #B9BFCC;
+    --subtle: #858DA1;
+    --border: #26304A;
+    --border-strong: #626B81;
+    --primary: #9AA8F0;
+    --primary-hover: #DCE2F7;
+    --on-primary: #0B1020;
+    --success: #5CC79A;
+    --warning: #E8B64C;
+    --danger: #F2788F;
+    --focus: #9AA8F0;
+    --accent: #F27A52;
+    --grid-line: rgba(154, 168, 240, 0.07);
+    --shadow-sheet: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 1rem/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover { color: var(--primary); }
+a:focus-visible, .btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+h1, h2 { font-family: var(--display); font-weight: 500; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.5rem, 4.6vw, 3.75rem); line-height: 1.05; letter-spacing: -0.015em; }
+h2 { font-size: clamp(1.75rem, 3.2vw, 2.5rem); line-height: 1.12; letter-spacing: -0.01em; }
+h3 { font: 600 1.25rem/1.3 var(--sans); margin: 0; }
+p { margin: 0 0 1rem; }
+p:last-child { margin-bottom: 0; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 1.5rem; }
+
+.skip { position: absolute; left: -999rem; top: 0; background: var(--text); color: var(--bg); padding: 0.5rem 1rem; }
+.skip:focus { left: 0; z-index: 10; }
+.skip:hover { color: var(--bg); }

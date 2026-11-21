@@ -1,0 +1,4 @@
+/* Closing call to action */
+.cta { border-top: 1px solid var(--border); background: var(--bg-subtle); background: color-mix(in srgb, var(--primary) 7%, var(--bg)); padding: 4.5rem 0; }
+.cta .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem 3rem; }
+.cta p { color: var(--muted); margin: 0.75rem 0 0; max-width: 34rem; }

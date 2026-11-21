@@ -1,0 +1,16 @@
+/* Issue sheet illustration in the hero */
+.sheet { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; font-size: 0.875rem; box-shadow: var(--shadow-sheet); }
+.sheet-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem; padding-bottom: 1rem; }
+.sheet-top strong { font: 500 1.3rem/1.2 var(--display); }
+.sheet dl { margin: 0; }
+.sheet dl div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0; border-top: 1px solid var(--border); }
+.sheet dt { color: var(--muted); }
+.sheet dd { margin: 0; font-family: var(--mono); white-space: nowrap; }
+.sheet dl .total dt { color: var(--text); font-weight: 600; }
+.sheet dl .total dd { font-weight: 500; }
+.sheet ul { list-style: none; margin: 0; padding: 0.9rem 0 1rem; border-top: 1px solid var(--border); }
+.sheet li { display: grid; grid-template-columns: 0.75rem minmax(0, 1fr) auto; gap: 0 0.6rem; align-items: center; padding: 0.3rem 0; }
+.sheet li span:nth-child(2) { font-weight: 500; }
+.sheet li span:last-child { color: var(--muted); font-size: 0.8125rem; text-align: right; }
+.approval { border: 1px dashed var(--border-strong); border-radius: 4px; padding: 0.85rem 1rem; color: var(--muted); font-size: 0.9375rem; }
+.sheet-note { color: var(--subtle); margin: 1rem 0 0; font-size: 0.625rem; letter-spacing: 0.06em; }

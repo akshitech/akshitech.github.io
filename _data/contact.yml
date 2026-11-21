@@ -1,0 +1,8 @@
+# One place for the company's details. The footer and Contact page read these.
+legal_name: Akshi Tech Private Limited
+email: hello@akshi.tech
+phone: "+918098881111"
+phone_display: "+91&nbsp;809&nbsp;888&nbsp;1111"
+whatsapp: "918098881111"
+cin: ""                # add when filed; the footer shows it once set
+registered_office: ""  # add with the CIN

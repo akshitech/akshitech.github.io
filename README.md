@@ -1,0 +1,52 @@
+# akshi.tech
+
+The website of Akshi Tech Private Limited: AI agents do the paperwork behind a professional firm's deadlines, and a qualified professional at the firm checks and signs every piece.
+
+Built with Jekyll and deployed to GitHub Pages by `.github/workflows/pages.yml` on every push to `main`.
+
+## Layout
+
+| Path | What it is |
+| --- | --- |
+| `index.html`, `products.html`, `services.html`, `how-it-works.html`, `company.html`, `contact.html`, `404.html` | The pages; each sets its title, description and URL in front matter |
+| `_layouts/default.html` | The one page shell |
+| `_includes/` | Head, header, footer, the workflow grid, the link arrow and the workflow count |
+| `_data/contact.yml` | Company name, email, phone, WhatsApp, CIN and registered office |
+| `_data/nav.yml` | The main and footer navigation |
+| `_data/workflows.yml` | The workflows on the Products page; every count on the site comes from here |
+| `_sass/`, `assets/css/main.scss` | The stylesheet, split by component; tokens in `_sass/_tokens.scss` mirror the design system |
+| `assets/` | Fonts, logo and the phone-menu script |
+| `tests/` | Checks run in CI on the built site |
+| `CNAME` | The custom domain, akshi.tech |
+
+## Run it
+
+Requires Ruby (version in `.ruby-version`) and Bundler.
+
+```sh
+bundle install
+bundle exec jekyll serve --port 8377
+```
+
+Then open http://127.0.0.1:8377.
+
+## Checks
+
+CI runs these on every push and pull request; run them before pushing:
+
+```sh
+JEKYLL_ENV=production bundle exec jekyll build
+python3 tests/check_built.py
+bundle exec htmlproofer _site --disable-external
+python3 -m http.server 8390 -d _site &   # then, with axe-core 4.10.3 saved locally:
+uv run --with playwright==1.55.0 python tests/browser_check.py http://127.0.0.1:8390 axe.min.js
+```
+
+`check_built.py` checks titles, descriptions, canonical URLs, the current-page link, workflow counts against the data file, and plain ASCII sources. `browser_check.py` runs axe (WCAG 2.2 AA and best practice) in light and dark at 1440, 390 and 320 px, and checks for sideways scrolling, visible keyboard focus and the phone menu.
+
+## Editing
+
+- Company details change in `_data/contact.yml`; a CIN set there appears in the footer.
+- Add or remove a workflow in `_data/workflows.yml`; counts on every page follow.
+- Pages state products and workflows without "coming soon" or status labels.
+- Illustrations in the hero cards say they are illustrative and use no client data.

@@ -1,0 +1,1 @@
+{%- assign n = 0 -%}{%- for g in site.data.workflows -%}{%- assign n = n | plus: g.items.size -%}{%- endfor -%}{{ n }}
