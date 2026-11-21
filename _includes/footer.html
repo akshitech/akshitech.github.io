@@ -28,10 +28,10 @@
 {%- if legal_pages.size == 2 %}
         <span class="foot-legal-links"><a href="{{ '/privacy/' | relative_url }}">Privacy policy</a><a href="{{ '/terms/' | relative_url }}">Terms of use</a></span>
 {%- endif %}
-{%- if site.data.contact.cin != "" %}
+{%- if site.data.contact.cin and site.data.contact.cin != "" %}
         <span>CIN {{ site.data.contact.cin }}</span>
 {%- endif %}
-{%- if site.data.contact.registered_office != "" %}
+{%- if site.data.contact.registered_office and site.data.contact.registered_office != "" %}
         <span>Registered office: {{ site.data.contact.registered_office }}</span>
 {%- endif %}
       </div>

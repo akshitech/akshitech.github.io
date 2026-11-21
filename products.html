@@ -147,7 +147,7 @@ permalink: /products/
           <p class="num">05 / Workflows</p>
           <h2>{% include workflow-count.html %} workflows across an audit practice</h2>
           {%- assign words = "zero,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve" | split: "," %}
-          <p>They fall into {{ words[site.data.workflows.size] }} areas, and each one follows the same rules: facts carry their source, every total opens, citations are checked and a named professional approves.</p>
+          <p>They fall into {{ words[site.data.workflows.size] | default: site.data.workflows.size }} areas, and each one follows the same rules: facts carry their source, every total opens, citations are checked and a named professional approves.</p>
         </div>
         {% include workflows.html %}
       </div>
@@ -171,7 +171,7 @@ permalink: /products/
       <div class="wrap">
         <div>
           <h2>Bring us a workflow</h2>
-          <p>Tell us which of these takes your team the longest. Bring past cases and the work you filed, and we test against them before you rely on anything.</p>
+          <p>Tell us which of these takes your team the longest. Once a data processing agreement is signed, we test against your past cases before you rely on anything.</p>
         </div>
         <a class="btn" href="/contact/">Send us a workflow</a>
       </div>

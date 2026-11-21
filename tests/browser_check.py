@@ -23,8 +23,8 @@ with sync_playwright() as p:
             pg = b.new_page(viewport={"width": w, "height": 900}, color_scheme=scheme)
             for path in paths:
                 resp = pg.goto(base + path, wait_until="networkidle")
-                if resp and resp.status == 404 and path != "/404.html":
-                    continue  # an unpublished page, such as a legal draft under review
+                if resp and resp.status == 404 and path in ("/privacy/", "/terms/"):
+                    continue  # legal drafts are unpublished until reviewed
                 sw = pg.evaluate("document.documentElement.scrollWidth")
                 if sw > w:
                     fails.append(f"{path} {w}px {scheme}: scrolls sideways ({sw}px)")
@@ -37,7 +37,7 @@ with sync_playwright() as p:
     pg = b.new_page(viewport={"width": 1440, "height": 900})
     for path in paths:
         resp = pg.goto(base + path, wait_until="networkidle")
-        if resp and resp.status == 404 and path != "/404.html":
+        if resp and resp.status == 404 and path in ("/privacy/", "/terms/"):
             continue
         seen = set()
         for _ in range(100):
