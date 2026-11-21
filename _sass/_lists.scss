@@ -11,3 +11,7 @@
 .facts span.d { color: var(--muted); }
 
 .split-body > p.note { border-left: 2px solid var(--primary); padding: 0.2rem 0 0.2rem 1.25rem; color: var(--muted); font-size: 1rem; line-height: 1.6; }
+
+/* A list that follows lead paragraphs gets room and a rule above it */
+.split-body > p + .list { margin-top: 1.75rem; }
+.split-body > p + .list li:first-child { border-top: 1px solid var(--border); padding-top: 0.85rem; }

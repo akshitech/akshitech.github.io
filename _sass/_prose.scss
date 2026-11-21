@@ -1,0 +1,12 @@
+/* Long-form text, as on the privacy and terms pages */
+.prose { max-width: 44rem; }
+.prose h2 { font-size: clamp(1.4rem, 2.4vw, 1.75rem); margin: 2.75rem 0 0.9rem; }
+.prose h2:first-child { margin-top: 0; }
+.prose p, .prose li { color: var(--muted); }
+.prose p { margin: 0 0 1rem; }
+.prose ul { margin: 0 0 1rem; padding-left: 1.25rem; }
+.prose li { margin: 0.35rem 0; }
+.prose strong { color: var(--text); font-weight: 600; }
+.prose a { color: var(--primary); text-decoration-color: var(--primary); }
+.prose .updated { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); }
+.confirm { background: color-mix(in srgb, var(--warning) 22%, transparent); color: var(--text); padding: 0 0.3em; border-radius: 3px; font-weight: 600; }

@@ -17,3 +17,9 @@
   header.querySelectorAll(".menu a").forEach(function (a) { a.addEventListener("click", function () { set(false); }); });
   window.matchMedia("(min-width: 56rem)").addEventListener("change", function (m) { if (m.matches) set(false); });
 })();
+
+// Products: on phones, start with the workflow areas closed so the list scans.
+(function () {
+  if (!window.matchMedia("(max-width: 52rem)").matches) return;
+  document.querySelectorAll(".groups details.group").forEach(function (d) { d.open = false; });
+})();

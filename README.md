@@ -8,7 +8,7 @@ Built with Jekyll and deployed to GitHub Pages by `.github/workflows/pages.yml` 
 
 | Path | What it is |
 | --- | --- |
-| `index.html`, `products.html`, `services.html`, `how-it-works.html`, `company.html`, `contact.html`, `404.html` | The pages; each sets its title, description and URL in front matter |
+| `index.html`, `products.html`, `services.html`, `how-it-works.html`, `contact.html`, `privacy.html`, `terms.html`, `404.html` | The pages; each sets its title, description and URL in front matter |
 | `_layouts/default.html` | The one page shell |
 | `_includes/` | Head, header, footer, the workflow grid, the link arrow and the workflow count |
 | `_data/contact.yml` | Company name, email, phone, WhatsApp, CIN and registered office |
@@ -50,6 +50,8 @@ uv run --with playwright==1.55.0 python tests/browser_check.py http://127.0.0.1:
 - Add or remove a workflow in `_data/workflows.yml`; counts on every page follow.
 - Pages state products and workflows without "coming soon" or status labels.
 - Illustrations in the hero cards say they are illustrative and use no client data.
+- The privacy policy and terms of use are drafts under legal review: `published: false` keeps them out of production builds, and the footer links show only when `legal_ready` is true in `_data/contact.yml` (the preview runs `jekyll serve --unpublished` to show them). Each open point is a `TO CONFIRM` marker, and `tests/check_built.py` fails while any remains. To publish: resolve every marker, set `published: true` on both pages and `legal_ready: true`.
+- Fonts are separate woff2 files in `assets/fonts/`; the Latin sets are preloaded in `_includes/head.html`.
 
 ## Share image
 

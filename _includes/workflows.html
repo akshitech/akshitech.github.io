@@ -1,13 +1,12 @@
-{%- assign total = 0 -%}
         <div class="groups">
 {%- for group in site.data.workflows %}
-            <div class="group">
-              <h3>{{ group.area }} <span class="count">{{ group.items.size | prepend: "0" | slice: -2, 2 }}</span></h3>
+            <details class="group" open>
+              <summary><h3>{{ group.area }} <span class="count">{{ group.items.size | prepend: "0" | slice: -2, 2 }}</span></h3></summary>
               <ul>
 {%- for item in group.items %}
                 <li><strong>{{ item.name }}</strong><span>{{ item.does }}</span></li>
 {%- endfor %}
               </ul>
-            </div>
+            </details>
 {%- endfor %}
         </div>

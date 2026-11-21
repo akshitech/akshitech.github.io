@@ -12,7 +12,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 base, axe = sys.argv[1].rstrip("/"), sys.argv[2]
-paths = ["/", "/products/", "/services/", "/how-it-works/", "/company/", "/contact/", "/404.html"]
+paths = ["/", "/products/", "/services/", "/how-it-works/", "/contact/", "/privacy/", "/terms/", "/404.html"]
 rules = {"type": "tag", "values": ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa", "best-practice"]}
 fails = []
 
@@ -22,7 +22,9 @@ with sync_playwright() as p:
         for w in [1440, 390, 320]:
             pg = b.new_page(viewport={"width": w, "height": 900}, color_scheme=scheme)
             for path in paths:
-                pg.goto(base + path, wait_until="networkidle")
+                resp = pg.goto(base + path, wait_until="networkidle")
+                if resp and resp.status == 404 and path != "/404.html":
+                    continue  # an unpublished page, such as a legal draft under review
                 sw = pg.evaluate("document.documentElement.scrollWidth")
                 if sw > w:
                     fails.append(f"{path} {w}px {scheme}: scrolls sideways ({sw}px)")
@@ -34,7 +36,9 @@ with sync_playwright() as p:
 
     pg = b.new_page(viewport={"width": 1440, "height": 900})
     for path in paths:
-        pg.goto(base + path, wait_until="networkidle")
+        resp = pg.goto(base + path, wait_until="networkidle")
+        if resp and resp.status == 404 and path != "/404.html":
+            continue
         seen = set()
         for _ in range(100):
             pg.keyboard.press("Tab")

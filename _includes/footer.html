@@ -1,11 +1,40 @@
   <footer class="foot">
     <div class="wrap">
-      <span>&copy; {{ site.time | date: "%Y" }} {{ site.data.contact.legal_name }}{% if site.data.contact.cin != "" %}. CIN {{ site.data.contact.cin }}{% endif %}</span>
-      <nav aria-label="Footer">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a href="{{ '/' | relative_url }}" aria-label="Akshi home"><img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="" width="133" height="50"></a>
+          <p>An agent-run back office for professional firms in India.</p>
+        </div>
+        <nav aria-label="Footer">
+          <p class="foot-head">Pages</p>
+          <ul class="foot-links">
 {%- for item in site.data.nav %}
-        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+            <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
 {%- endfor %}
-        <a href="{{ '/contact/' | relative_url }}">Contact</a>
-      </nav>
+            <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+          </ul>
+        </nav>
+        <div>
+          <p class="foot-head">Contact</p>
+          <div class="foot-contact">
+            <a href="mailto:{{ site.data.contact.email }}">{{ site.data.contact.email }}</a>
+            <a href="tel:{{ site.data.contact.phone }}">{{ site.data.contact.phone_display }}</a>
+            <a href="https://wa.me/{{ site.data.contact.whatsapp }}">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-legal">
+        <span>&copy; {{ site.time | date: "%Y" }} {{ site.data.contact.legal_name }}</span>
+{%- if site.data.contact.legal_ready or jekyll.environment != "production" %}
+        <a href="{{ '/privacy/' | relative_url }}">Privacy policy</a>
+        <a href="{{ '/terms/' | relative_url }}">Terms of use</a>
+{%- endif %}
+{%- if site.data.contact.cin != "" %}
+        <span>CIN {{ site.data.contact.cin }}</span>
+{%- endif %}
+{%- if site.data.contact.registered_office != "" %}
+        <span>Registered office: {{ site.data.contact.registered_office }}</span>
+{%- endif %}
+      </div>
     </div>
   </footer>

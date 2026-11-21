@@ -1,8 +1,22 @@
-/* Footer */
-.foot { border-top: 1px solid var(--border); padding: 2rem 0 3rem; color: var(--muted); font-size: 0.875rem; }
-.foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem; }
-.foot nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+/* Footer: brand, links and contact in columns, the legal line below */
+.foot { border-top: 1px solid var(--border); padding: 3.5rem 0 2rem; color: var(--muted); font-size: 0.9375rem; }
 .foot a { text-decoration: none; }
+.foot a:hover { color: var(--primary); }
+.foot-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 2.5rem 6rem; }
+.foot-brand img { display: block; height: 1.75rem; width: auto; aspect-ratio: 133 / 50; }
+.foot-brand p { margin: 0.9rem 0 0; max-width: 22rem; text-wrap: balance; }
+.foot-head { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); margin: 0 0 1rem; }
+.foot-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; justify-items: start; }
+.foot-contact { display: grid; gap: 0.6rem; justify-items: start; }
+.foot-contact a { color: var(--text); }
+.foot-legal { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--subtle); font-size: 0.8125rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
+
+@media (max-width: 52rem) {
+  .foot { padding-top: 2.75rem; }
+  .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 1.5rem; }
+  .foot-brand { grid-column: 1 / -1; }
+  .foot-legal { margin-top: 2.25rem; }
+}
 
 @media (max-width: 52rem) {
   .hero { padding: 3rem 0; }

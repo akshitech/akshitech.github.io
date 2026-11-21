@@ -1,0 +1,51 @@
+---
+layout: default
+published: false  # draft under legal review: set true, and legal_ready in _data/contact.yml, once reviewed
+title: "Terms of use | Akshi"
+description: "The terms for using akshi.tech, the website of Akshi Tech Private Limited."
+permalink: /terms/
+---
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Legal</p>
+          <h1>Terms of use</h1>
+          <p class="lede">The terms for using this website. Work for clients is covered by a separate signed agreement.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap">
+        <div class="prose">
+          <p class="updated">Last updated 21 November 2026</p>
+
+          <h2>Who we are</h2>
+          <p>akshi.tech is the website of {{ site.data.contact.legal_name }} ("Akshi", "we"). By using it you agree to these terms.</p>
+
+          <h2>Our services</h2>
+          <p>We provide services to firms only under a signed agreement. Where that agreement and these terms differ, the agreement applies.</p>
+
+          <h2>Information, not advice</h2>
+          <p>Nothing on this website is legal, tax, accounting or other professional advice. Examples, figures and screens shown here are illustrative and use no client data. Do not act on anything here without advice from a qualified professional who knows your facts.</p>
+
+          <h2>Accuracy</h2>
+          <p>We work to keep this website correct and up to date, but we do not guarantee that it is complete or current. Descriptions of our products and services may change.</p>
+
+          <h2>Our content</h2>
+          <p>The text, logo and design of this website belong to {{ site.data.contact.legal_name }}. You may link to any page and quote short passages with credit to Akshi. Any other copying needs our written permission. The fonts are used under the SIL Open Font License.</p>
+
+          <h2>Other websites</h2>
+          <p>This website links to sources and services we do not control. We are not responsible for their content or their privacy practices.</p>
+
+          <h2>Liability</h2>
+          <p>To the extent the law allows, we are not liable for any loss that arises from using this website or relying on its content. Nothing in these terms limits liability that cannot be limited under Indian law.</p>
+
+          <h2>Law and disputes</h2>
+          <p>These terms are governed by the laws of India. The courts at {% if site.data.contact.jurisdiction_city != "" %}{{ site.data.contact.jurisdiction_city }}{% else %}{% include confirm.html what="city, usually where the registered office is" %}{% endif %} have exclusive jurisdiction over any dispute about them.</p>
+
+          <h2>Changes and contact</h2>
+          <p>We may update these terms; the date at the top shows the latest version. Questions go to <a href="mailto:{{ site.data.contact.email }}">{{ site.data.contact.email }}</a>.</p>
+        </div>
+      </div>
+    </section>

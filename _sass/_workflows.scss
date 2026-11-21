@@ -13,3 +13,17 @@
   .groups { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
   .group li { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Each area is a <details>: open on wide screens; on phones site.js closes them so the list scans */
+.group summary { list-style: none; cursor: default; }
+.group summary::-webkit-details-marker { display: none; }
+@media (max-width: 52rem) {
+  .group summary { cursor: pointer; }
+  .group h3::after { content: ""; width: 0.5rem; height: 0.5rem; border-right: 1.5px solid var(--subtle); border-bottom: 1.5px solid var(--subtle); transform: rotate(45deg); margin: 0 0.2rem 0 0.9rem; transition: transform 150ms ease-out; align-self: center; }
+  .group[open] h3::after { transform: rotate(-135deg); }
+  .group h3 .count { margin-left: auto; }
+  .group:not([open]) h3 { border-bottom-color: var(--border); }
+  .groups { gap: 0; }
+  .group h3 { padding-top: 1rem; padding-bottom: 1rem; }
+  .group[open] ul { margin-bottom: 1.5rem; }
+}

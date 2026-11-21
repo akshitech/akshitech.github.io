@@ -2,7 +2,8 @@
 """Checks the built site in _site. Exits non-zero on any failure.
 
 - every page has a unique <title>, a description and an absolute canonical URL
-- every page marks exactly one main-nav link as the current page (the 404 page none)
+- every page in the main nav, and Contact, marks exactly one main-nav link as current; other pages none
+- no "TO CONFIRM" marker is left in a built page (legal drafts awaiting review)
 - the workflow count stated anywhere ("N workflows") matches _data/workflows.yml
 - source files are plain ASCII (entities like &#8377; are fine)
 """
@@ -20,11 +21,15 @@ for d, _, files in os.walk(SITE):
 
 data = open(os.path.join(ROOT, "_data", "workflows.yml"), encoding="utf-8").read()
 total = len(re.findall(r"^\s+- name:", data, re.M))
+nav = open(os.path.join(ROOT, "_data", "nav.yml"), encoding="utf-8").read()
+in_nav = {u.strip("/") for u in re.findall(r"^\s+url:\s*(\S+)", nav, re.M)} | {"contact"}
 
 titles = {}
 for p in pages:
     rel = os.path.relpath(p, SITE)
     s = open(p, encoding="utf-8").read()
+    if 'http-equiv="refresh"' in s:
+        continue  # a redirect stub from jekyll-redirect-from, not a page
     t = re.search(r"<title>([^<]+)</title>", s)
     if not t:
         errors.append(f"{rel}: no title")
@@ -36,9 +41,12 @@ for p in pages:
         errors.append(f"{rel}: canonical missing or not absolute")
     nav = re.search(r'<nav aria-label="Main">(.*?)</nav>', s, re.S)
     current = re.findall(r'aria-current="page"', nav.group(1)) if nav else []
-    want = 0 if rel == "404.html" else 1
+    slug = os.path.dirname(rel) if os.path.basename(rel) == "index.html" else rel
+    want = 1 if slug in in_nav else 0
     if len(current) != want:
         errors.append(f"{rel}: {len(current)} current links in the main nav, expected {want}")
+    if "TO CONFIRM" in s:
+        errors.append(f"{rel}: has a TO CONFIRM marker; finish the legal review before deploying")
     text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", s))
     for n in re.findall(r"(\d+) workflows", text):
         if int(n) != total:
