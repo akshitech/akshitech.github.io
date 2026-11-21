@@ -39,7 +39,8 @@ for p in pages:
     want = 0 if rel == "404.html" else 1
     if len(current) != want:
         errors.append(f"{rel}: {len(current)} current links in the main nav, expected {want}")
-    for n in re.findall(r"(\d+) workflows", re.sub(r"<[^>]+>", "", s)):
+    text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", s))
+    for n in re.findall(r"(\d+) workflows", text):
         if int(n) != total:
             errors.append(f"{rel}: says {n} workflows, data has {total}")
 

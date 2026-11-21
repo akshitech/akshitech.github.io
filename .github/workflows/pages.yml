@@ -52,7 +52,8 @@ jobs:
           curl -sfL "https://cdn.jsdelivr.net/npm/axe-core@${AXE_VERSION}/axe.min.js" -o "$RUNNER_TEMP/axe.min.js"
           echo "${AXE_SHA256}  $RUNNER_TEMP/axe.min.js" | sha256sum -c -
           python3 -m http.server 8390 --bind 127.0.0.1 -d _site &
-          sleep 1
+          for i in $(seq 1 30); do curl -sf -o /dev/null http://127.0.0.1:8390/ && break; sleep 1; done
+          curl -sf -o /dev/null http://127.0.0.1:8390/
           uv run --with playwright==1.55.0 python tests/browser_check.py http://127.0.0.1:8390 "$RUNNER_TEMP/axe.min.js"
       - name: Upload artifact
         if: github.event_name != 'pull_request'
