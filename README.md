@@ -50,7 +50,7 @@ uv run --with playwright==1.55.0 python tests/browser_check.py http://127.0.0.1:
 - Add or remove a workflow in `_data/workflows.yml`; counts on every page follow.
 - Pages state products and workflows without "coming soon" or status labels.
 - Illustrations in the hero cards say they are illustrative and use no client data.
-- The privacy policy and terms of use are drafts under legal review: `published: false` keeps them out of production builds, and the footer links show only when `legal_ready` is true in `_data/contact.yml` (the preview runs `jekyll serve --unpublished` to show them). Each open point is a `TO CONFIRM` marker, and `tests/check_built.py` fails while any remains. To publish: resolve every marker, set `published: true` on both pages and `legal_ready: true`.
+- The privacy policy and terms of use are drafts under legal review: `published: false` keeps them out of production builds, and the footer links them only when both pages are built (the preview runs `jekyll serve --unpublished` to show them). Each open point is a `TO CONFIRM` marker, and `tests/check_built.py` fails while any remains. To publish: resolve every marker and set `published: true` on both pages.
 - Fonts are separate woff2 files in `assets/fonts/`; the Latin sets are preloaded in `_includes/head.html`.
 
 ## Share image

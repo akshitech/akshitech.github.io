@@ -25,7 +25,8 @@
       </div>
       <div class="foot-legal">
         <span>&copy; {{ site.time | date: "%Y" }} {{ site.data.contact.legal_name }}</span>
-{%- if site.data.contact.legal_ready or jekyll.environment != "production" %}
+{%- assign legal_pages = site.pages | where_exp: "p", "p.url == '/privacy/' or p.url == '/terms/'" %}
+{%- if legal_pages.size == 2 %}
         <a href="{{ '/privacy/' | relative_url }}">Privacy policy</a>
         <a href="{{ '/terms/' | relative_url }}">Terms of use</a>
 {%- endif %}

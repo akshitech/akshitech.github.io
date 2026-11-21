@@ -18,8 +18,15 @@
   window.matchMedia("(min-width: 56rem)").addEventListener("change", function (m) { if (m.matches) set(false); });
 })();
 
-// Products: on phones, start with the workflow areas closed so the list scans.
+// Products: on phones the workflow areas start closed so the list scans; on wide screens they stay open.
 (function () {
-  if (!window.matchMedia("(max-width: 52rem)").matches) return;
-  document.querySelectorAll(".groups details.group").forEach(function (d) { d.open = false; });
+  var groups = document.querySelectorAll(".groups details.group");
+  if (!groups.length) return;
+  var narrow = window.matchMedia("(max-width: 52rem)");
+  function apply() { groups.forEach(function (d) { d.open = !narrow.matches; }); }
+  apply();
+  narrow.addEventListener("change", apply);
+  groups.forEach(function (d) {
+    d.querySelector("summary").addEventListener("click", function (e) { if (!narrow.matches) e.preventDefault(); });
+  });
 })();

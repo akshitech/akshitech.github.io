@@ -7,4 +7,3 @@ whatsapp: "918098881111"
 cin: ""                # add when filed; the footer shows it once set
 registered_office: ""  # add with the CIN
 jurisdiction_city: ""  # the city whose courts hear disputes under the terms of use
-legal_ready: false     # true once the privacy and terms drafts are reviewed; also set published: true on both pages
