@@ -12,13 +12,13 @@
 .foot-legal-links { display: flex; gap: 1.5rem; margin-left: auto; }
 .foot-legal-links a { color: var(--muted); }
 .foot-legal-links a:hover { color: var(--primary); }
-/* Theme choice: shown only with JavaScript, which is what applies it */
-.theme-switch { display: flex; gap: 0.75rem; align-items: baseline; }
-.theme-switch[hidden] { display: none; }
-.theme-switch button { font: inherit; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; }
-.theme-switch button:hover { color: var(--primary); }
-.theme-switch button[aria-pressed="true"] { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-.theme-switch button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* Theme toggle: one icon button, shown only with JavaScript, which is what applies it */
+.theme-toggle { display: inline-flex; align-self: center; align-items: center; justify-content: center; width: 2rem; height: 2rem; margin: -0.4rem -0.4rem -0.4rem 0; padding: 0; color: var(--muted); background: none; border: 0; border-radius: 6px; cursor: pointer; }
+.theme-toggle[hidden] { display: none; }
+.theme-toggle:hover { color: var(--primary); }
+.theme-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.theme-toggle svg { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.theme-toggle[aria-pressed="true"] .icon-sun, .theme-toggle[aria-pressed="false"] .icon-moon { display: none; }
 /* Phones: the two legal links on one line, the copyright line closing the footer below them */
 @media (max-width: 52rem) {
   .foot-legal { flex-direction: column-reverse; align-items: flex-start; gap: 0.75rem; }

@@ -28,26 +28,39 @@
   narrow.addEventListener("change", apply);
 })();
 
-// Theme: System follows the device; Light or Dark is saved in this browser and applied by the head script on every page.
+// Theme: one button flips light and dark. A choice that matches the device is not saved,
+// so the site goes back to following the device; any other choice is saved in this browser
+// and applied by the head script on every page.
 (function () {
-  var group = document.querySelector(".theme-switch");
-  if (!group) return;
+  var button = document.querySelector(".theme-toggle");
+  if (!button) return;
   var root = document.documentElement;
-  var buttons = group.querySelectorAll("button");
-  function show(choice) {
-    buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-theme-choice") === choice ? "true" : "false"); });
+  var system = window.matchMedia("(prefers-color-scheme: dark)");
+  function current() {
+    var t = root.getAttribute("data-theme");
+    return t === "light" || t === "dark" ? t : (system.matches ? "dark" : "light");
   }
-  buttons.forEach(function (b) {
-    b.addEventListener("click", function () {
-      var choice = b.getAttribute("data-theme-choice");
-      if (choice === "system") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", choice);
-      var meta = document.querySelector('meta[name="color-scheme"]');
-      if (meta) meta.setAttribute("content", choice === "system" ? "light dark" : choice);
-      try { if (choice === "system") localStorage.removeItem("theme"); else localStorage.setItem("theme", choice); } catch (e) {}
-      show(choice);
-    });
+  function show() { button.setAttribute("aria-pressed", current() === "dark" ? "true" : "false"); }
+  button.addEventListener("click", function () {
+    var next = current() === "dark" ? "light" : "dark";
+    var follow = next === (system.matches ? "dark" : "light");
+    if (follow) root.removeAttribute("data-theme"); else root.setAttribute("data-theme", next);
+    var meta = document.querySelector('meta[name="color-scheme"]');
+    if (meta) meta.setAttribute("content", follow ? "light dark" : next);
+    try { if (follow) localStorage.removeItem("theme"); else localStorage.setItem("theme", next); } catch (e) {}
+    show();
   });
-  var saved = root.getAttribute("data-theme");
-  show(saved === "light" || saved === "dark" ? saved : "system");
-  group.hidden = false;
+  // The device changed while the page is open: a saved choice it now matches is dropped.
+  system.addEventListener("change", function () {
+    var t = root.getAttribute("data-theme");
+    if (t && t === (system.matches ? "dark" : "light")) {
+      root.removeAttribute("data-theme");
+      var meta = document.querySelector('meta[name="color-scheme"]');
+      if (meta) meta.setAttribute("content", "light dark");
+      try { localStorage.removeItem("theme"); } catch (e) {}
+    }
+    show();
+  });
+  show();
+  button.hidden = false;
 })();

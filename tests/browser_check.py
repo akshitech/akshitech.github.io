@@ -79,38 +79,65 @@ with sync_playwright() as p:
         pg.close()
     if ref["light"] == ref["dark"]:
         fails.append("theme: light and dark backgrounds are the same")
-    for system, choice in [("light", "dark"), ("dark", "light")]:
+    for system, other in [("light", "dark"), ("dark", "light")]:
         ctx = b.new_context(viewport={"width": 1440, "height": 900}, color_scheme=system)
         pg = ctx.new_page()
         pg.goto(base + "/", wait_until="networkidle")
-        if not pg.is_visible(".theme-switch"):
-            fails.append("theme: footer switch is not visible")
+        if not pg.is_visible(".theme-toggle"):
+            fails.append("theme: footer toggle is not visible")
             ctx.close()
             continue
-        pg.click(f'.theme-switch [data-theme-choice="{choice}"]')
-        if bg(pg) != ref[choice]:
-            fails.append(f"theme: choosing {choice} on a {system} system does not apply it")
+        def pressed():
+            return pg.get_attribute(".theme-toggle", "aria-pressed")
+        def icon_ok(theme):
+            return pg.is_visible(".theme-toggle .icon-moon") == (theme == "dark") and pg.is_visible(".theme-toggle .icon-sun") == (theme == "light")
+        if pressed() != ("true" if system == "dark" else "false") or not icon_ok(system):
+            fails.append(f"theme: toggle does not show the {system} system theme")
+        pg.click(".theme-toggle")
+        if bg(pg) != ref[other] or pressed() != ("true" if other == "dark" else "false"):
+            fails.append(f"theme: toggle on a {system} system does not switch to {other}")
         pg.goto(base + "/products/", wait_until="networkidle")
-        if bg(pg) != ref[choice] or pg.get_attribute(f'.theme-switch [data-theme-choice="{choice}"]', "aria-pressed") != "true":
-            fails.append(f"theme: {choice} is not kept on the next page")
-        if pg.get_attribute('meta[name="color-scheme"]', "content") != choice:
-            fails.append(f"theme: the color-scheme meta tag does not follow the saved {choice}")
+        if bg(pg) != ref[other] or pg.get_attribute('meta[name="color-scheme"]', "content") != other \
+                or pressed() != ("true" if other == "dark" else "false") or not icon_ok(other):
+            fails.append(f"theme: {other} is not kept on the next page")
         pg.add_script_tag(path=axe)
         r = pg.evaluate("rules => axe.run(document, {runOnly: rules})", rules)
         for v in r["violations"]:
-            fails.append(f"/products/ chosen {choice} on {system}: axe {v['id']} on {v['nodes'][0]['target']}")
-        pg.click('.theme-switch [data-theme-choice="system"]')
-        if bg(pg) != ref[system] or pg.get_attribute('.theme-switch [data-theme-choice="system"]', "aria-pressed") != "true":
-            fails.append(f"theme: System does not take effect at once on a {system} system")
-        if pg.get_attribute('meta[name="color-scheme"]', "content") != "light dark":
-            fails.append("theme: System does not restore the color-scheme meta tag")
+            fails.append(f"/products/ toggled to {other} on {system}: axe {v['id']} on {v['nodes'][0]['target']}")
+        pg.click(".theme-toggle")
+        if bg(pg) != ref[system] or pg.get_attribute("html", "data-theme") is not None \
+                or pg.get_attribute('meta[name="color-scheme"]', "content") != "light dark" \
+                or pressed() != ("true" if system == "dark" else "false") or not icon_ok(system):
+            fails.append(f"theme: toggling back does not return to following the {system} system")
         pg.reload(wait_until="networkidle")
-        if bg(pg) != ref[system] or pg.get_attribute("html", "data-theme") is not None:
-            fails.append(f"theme: System does not return to the {system} system theme")
+        if bg(pg) != ref[system] or pg.get_attribute("html", "data-theme") is not None or pressed() != ("true" if system == "dark" else "false"):
+            fails.append(f"theme: after toggling back, a reload does not follow the {system} system")
+        # Device follows: with no saved choice the page tracks a device change at once.
+        pg.emulate_media(color_scheme=other)
+        pg.wait_for_timeout(300)  # the change event is asynchronous
+        if bg(pg) != ref[other] or pressed() != ("true" if other == "dark" else "false"):
+            fails.append(f"theme: a device change to {other} is not followed")
+        pg.emulate_media(color_scheme=system)
+        pg.wait_for_timeout(300)
+        # A saved choice that the device comes to match is dropped, so the site follows the device again.
+        pg.click(".theme-toggle")
+        pg.emulate_media(color_scheme=other)
+        pg.wait_for_timeout(300)  # the change event is asynchronous
+        if pg.get_attribute("html", "data-theme") is not None or pg.evaluate("localStorage.getItem('theme')") is not None:
+            fails.append(f"theme: a saved {other} is kept after the device switched to {other}")
+        pg.emulate_media(color_scheme=system)
+        pg.wait_for_timeout(300)
+        if bg(pg) != ref[system]:
+            fails.append(f"theme: after the device matched and changed back, the site does not follow it to {system}")
+        # A saved choice that already matches the device on load is dropped too.
+        pg.evaluate(f"localStorage.setItem('theme', '{system}')")
+        pg.reload(wait_until="networkidle")
+        if pg.evaluate("localStorage.getItem('theme')") is not None or pg.get_attribute("html", "data-theme") is not None:
+            fails.append(f"theme: a saved {system} matching the device is kept on load")
         ctx.close()
     b.close()
 
 if fails:
     print("\n".join(fails))
     sys.exit(1)
-print(f"ok: {len(paths)} pages, 2 themes, 3 widths, keyboard, phone menu and theme switch")
+print(f"ok: {len(paths)} pages, 2 themes, 3 widths, keyboard, phone menu and theme toggle")
