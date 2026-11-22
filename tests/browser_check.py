@@ -93,11 +93,17 @@ with sync_playwright() as p:
         pg.goto(base + "/products/", wait_until="networkidle")
         if bg(pg) != ref[choice] or pg.get_attribute(f'.theme-switch [data-theme-choice="{choice}"]', "aria-pressed") != "true":
             fails.append(f"theme: {choice} is not kept on the next page")
+        if pg.get_attribute('meta[name="color-scheme"]', "content") != choice:
+            fails.append(f"theme: the color-scheme meta tag does not follow the saved {choice}")
         pg.add_script_tag(path=axe)
         r = pg.evaluate("rules => axe.run(document, {runOnly: rules})", rules)
         for v in r["violations"]:
             fails.append(f"/products/ chosen {choice} on {system}: axe {v['id']} on {v['nodes'][0]['target']}")
         pg.click('.theme-switch [data-theme-choice="system"]')
+        if bg(pg) != ref[system] or pg.get_attribute('.theme-switch [data-theme-choice="system"]', "aria-pressed") != "true":
+            fails.append(f"theme: System does not take effect at once on a {system} system")
+        if pg.get_attribute('meta[name="color-scheme"]', "content") != "light dark":
+            fails.append("theme: System does not restore the color-scheme meta tag")
         pg.reload(wait_until="networkidle")
         if bg(pg) != ref[system] or pg.get_attribute("html", "data-theme") is not None:
             fails.append(f"theme: System does not return to the {system} system theme")

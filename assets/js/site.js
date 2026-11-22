@@ -41,6 +41,8 @@
     b.addEventListener("click", function () {
       var choice = b.getAttribute("data-theme-choice");
       if (choice === "system") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", choice);
+      var meta = document.querySelector('meta[name="color-scheme"]');
+      if (meta) meta.setAttribute("content", choice === "system" ? "light dark" : choice);
       try { if (choice === "system") localStorage.removeItem("theme"); else localStorage.setItem("theme", choice); } catch (e) {}
       show(choice);
     });
