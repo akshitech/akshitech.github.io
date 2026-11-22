@@ -7,7 +7,10 @@
 [id] { scroll-margin-top: 5.5rem; }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; min-height: 4.5rem; }
 .brand { display: inline-flex; align-items: center; }
-.brand img { display: block; height: 2rem; width: auto; aspect-ratio: 133 / 50; }
+.brand .logo { display: block; height: 2rem; width: auto; aspect-ratio: 133 / 50; }
+/* The logo is inline so its colours follow the page's theme, not the image's own guess */
+.logo-ink { fill: var(--text); }
+.logo-dot { fill: var(--accent); }
 .site nav { display: flex; align-items: center; gap: 1.75rem; font-size: 0.9375rem; }
 .menu { display: flex; align-items: center; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
 .menu a { text-decoration: none; display: inline-block; padding: 0.35rem 0; }

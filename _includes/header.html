@@ -1,6 +1,6 @@
   <header class="site">
     <div class="wrap bar">
-      <a class="brand" href="{{ '/' | relative_url }}" aria-label="Akshi home"><img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="" width="133" height="50"></a>
+      <a class="brand" href="{{ '/' | relative_url }}" aria-label="Akshi home">{% include logo.svg %}</a>
       <nav aria-label="Main">
         <ul class="menu" id="menu">
 {%- for item in site.data.nav %}

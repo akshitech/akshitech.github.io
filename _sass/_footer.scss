@@ -3,7 +3,7 @@
 .foot a { text-decoration: none; }
 .foot a:hover { color: var(--primary); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 2.5rem 6rem; }
-.foot-brand img { display: block; height: 1.75rem; width: auto; aspect-ratio: 133 / 50; }
+.foot-brand .logo { display: block; height: 1.75rem; width: auto; aspect-ratio: 133 / 50; }
 .foot-brand p { margin: 0.9rem 0 0; max-width: 22rem; text-wrap: balance; }
 .foot-head { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); margin: 0 0 1rem; }
 .foot-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; justify-items: start; }
