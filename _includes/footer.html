@@ -24,9 +24,10 @@
       </div>
       <div class="foot-legal">
         <span>&copy; {{ site.time | date: "%Y" }} {{ site.data.contact.legal_name }}</span>
-{%- assign legal_pages = site.pages | where_exp: "p", "p.url == '/privacy/' or p.url == '/terms/'" %}
-{%- if legal_pages.size == 2 %}
-        <span class="foot-legal-links"><a href="{{ '/privacy/' | relative_url }}">Privacy policy</a><a href="{{ '/terms/' | relative_url }}">Terms of use</a></span>
+{%- assign privacy_page = site.pages | where: "url", "/privacy/" | first %}
+{%- assign terms_page = site.pages | where: "url", "/terms/" | first %}
+{%- if privacy_page or terms_page %}
+        <span class="foot-legal-links">{% if privacy_page %}<a href="{{ '/privacy/' | relative_url }}">Privacy policy</a>{% endif %}{% if terms_page %}<a href="{{ '/terms/' | relative_url }}">Terms of use</a>{% endif %}</span>
 {%- endif %}
 {%- if site.data.contact.cin and site.data.contact.cin != "" %}
         <span>CIN {{ site.data.contact.cin }}</span>

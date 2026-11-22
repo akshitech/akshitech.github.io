@@ -50,7 +50,7 @@
     - name: "Bank reconciliation"
       does: "Bank matched to books"
     - name: "Payroll compliance"
-      does: "PF, ESI and professional tax filings"
+      does: "PF, ESI and professional tax returns prepared"
 - area: "Audit and assurance"
   items:
     - name: "Ledger scrutiny"
