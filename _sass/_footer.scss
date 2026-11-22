@@ -32,7 +32,7 @@
   .band, .cta { padding: 3rem 0; }
   .cards, .rules, .facts { grid-template-columns: minmax(0, 1fr); }
   .split-body > p { font-size: 1.125rem; }
-  .split-body > :is(.list, .facts, .steps) ~ p { font-size: 1rem; }
+  .split-body > :is(.list, .facts, .steps) ~ p, .split-body > p.sub { font-size: 1rem; }
 }
 
 @media (max-width: 30rem) {
