@@ -1,5 +1,5 @@
 /* Footer: brand, links and contact in columns, the legal line below */
-.foot { border-top: 1px solid var(--border); padding: 3.5rem 0 2.5rem; color: var(--muted); font-size: 0.9375rem; }
+.foot { border-top: 1px solid var(--border); padding: 3.5rem 0 2rem; color: var(--muted); font-size: 0.9375rem; }
 .foot a { text-decoration: none; }
 .foot a:hover { color: var(--primary); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 2.5rem 6rem; }
@@ -23,7 +23,7 @@
 .theme-toggle[aria-pressed="true"] .icon-sun, .theme-toggle[aria-pressed="false"] .icon-moon { display: none; }
 
 @media (max-width: 52rem) {
-  .foot { padding-top: 2.5rem; padding-bottom: 2rem; }
+  .foot { padding-top: 2.5rem; padding-bottom: 1.5rem; }
   .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 1.5rem; }
   .foot-brand { grid-column: 1 / -1; }
   /* Phones: legal links on the first row; the copyright closes the footer with the theme icon at the right of its line */
