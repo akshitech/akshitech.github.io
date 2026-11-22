@@ -16,6 +16,7 @@
   --danger: #B42345;
   --focus: #4A5FCB;
   --accent: #D84A1B;
+  --accent-text: #BD4116;
   --grid-line: rgba(20, 28, 49, 0.085);
   --shadow-sheet: 0 8px 24px rgba(11, 16, 32, 0.12);
   --display: "Newsreader", "Iowan Old Style", Georgia, serif;
@@ -44,6 +45,7 @@
   --danger: #F2788F;
   --focus: #9AA8F0;
   --accent: #F27A52;
+  --accent-text: #F27A52;
   --grid-line: rgba(154, 168, 240, 0.07);
   --shadow-sheet: 0 8px 24px rgba(0, 0, 0, 0.5);
   color-scheme: dark;
@@ -81,5 +83,5 @@ p:last-child { margin-bottom: 0; }
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 1.5rem; }
 
 .skip { position: absolute; left: -999rem; top: 0; background: var(--text); color: var(--bg); padding: 0.5rem 1rem; }
-.skip:focus { left: 0; z-index: 10; }
+.skip:focus { left: 0; z-index: 30; }
 .skip:hover { color: var(--bg); }

@@ -14,7 +14,6 @@
   /* One column is a plain block, not a multi-column one: Safari keeps a multi-column box at the
      height its areas had open after they close, which leaves a gap below the last one. */
   .groups { columns: auto; }
-  .groups .group { margin-bottom: 2.5rem; }
   .group li { grid-template-columns: minmax(0, 1fr); }
 }
 

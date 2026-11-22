@@ -8,7 +8,7 @@
 .sheet .head { display: flex; justify-content: space-between; font: 500 0.625rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); padding: 0.8rem 0 0.6rem; border-top: 1px solid var(--border); }
 .sheet .head + .rows { border-top: 0; }
 .chip.ok { color: var(--success); }
-.chip.due { color: var(--accent); }
+.chip.due { color: var(--accent-text); }
 .verdict { border: 1px solid var(--success); color: var(--success); border-radius: 4px; padding: 0.85rem 1rem; font-weight: 600; font-size: 0.9375rem; margin-top: 0.25rem; }
 .run { list-style: none; margin: 0; padding: 0.25rem 0 1rem; border-top: 1px solid var(--border); }
 .run li { position: relative; display: grid; grid-template-columns: 0.75rem minmax(0, 1fr); gap: 0 0.85rem; padding: 0.75rem 0 0.25rem; }

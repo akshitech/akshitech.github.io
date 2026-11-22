@@ -7,7 +7,12 @@
     header.classList.toggle("open", open);
     button.setAttribute("aria-expanded", open ? "true" : "false");
   }
-  button.addEventListener("click", function () { set(!header.classList.contains("open")); });
+  button.addEventListener("click", function () {
+    var open = !header.classList.contains("open");
+    set(open);
+    // The links come before the button in the page, so focus moves into the opened menu.
+    if (open) { var first = header.querySelector(".menu a"); if (first) first.focus(); }
+  });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && header.classList.contains("open")) { set(false); button.focus(); }
   });

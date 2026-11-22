@@ -58,11 +58,24 @@ with sync_playwright() as p:
                 fails.append(f"{path}: focus not visible on {el['k']}")
     pg.close()
 
+    # The skip link, the first Tab stop, must be visible above the sticky header.
+    for w in [390, 1440]:
+        pg = b.new_page(viewport={"width": w, "height": 900})
+        pg.goto(base + "/", wait_until="networkidle")
+        pg.keyboard.press("Tab")
+        top = pg.evaluate("""() => { const e = document.activeElement, r = e.getBoundingClientRect();
+            return e.classList.contains("skip") && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2) === e; }""")
+        if not top:
+            fails.append(f"skip link is not the visible first Tab stop at {w}px")
+        pg.close()
+
     pg = b.new_page(viewport={"width": 390, "height": 844})
     pg.goto(base + "/services/", wait_until="networkidle")
     pg.click(".menu-btn")
     if pg.get_attribute(".menu-btn", "aria-expanded") != "true" or not pg.is_visible("#menu"):
         fails.append("phone menu does not open")
+    if not pg.evaluate("document.activeElement.closest('#menu') !== null"):
+        fails.append("phone menu does not move focus into its links when opened")
     pg.keyboard.press("Escape")
     if pg.get_attribute(".menu-btn", "aria-expanded") != "false" or pg.is_visible("#menu"):
         fails.append("phone menu does not close on Escape")
