@@ -68,9 +68,43 @@ with sync_playwright() as p:
         fails.append("phone menu does not close on Escape")
     if "menu-btn" not in (pg.evaluate("document.activeElement.className") or ""):
         fails.append("focus does not return to the menu button")
+
+    def bg(pg):
+        return pg.evaluate("getComputedStyle(document.body).backgroundColor")
+    ref = {}
+    for scheme in ["light", "dark"]:
+        pg = b.new_page(viewport={"width": 1440, "height": 900}, color_scheme=scheme)
+        pg.goto(base + "/", wait_until="networkidle")
+        ref[scheme] = bg(pg)
+        pg.close()
+    if ref["light"] == ref["dark"]:
+        fails.append("theme: light and dark backgrounds are the same")
+    for system, choice in [("light", "dark"), ("dark", "light")]:
+        ctx = b.new_context(viewport={"width": 1440, "height": 900}, color_scheme=system)
+        pg = ctx.new_page()
+        pg.goto(base + "/", wait_until="networkidle")
+        if not pg.is_visible(".theme-switch"):
+            fails.append("theme: footer switch is not visible")
+            ctx.close()
+            continue
+        pg.click(f'.theme-switch [data-theme-choice="{choice}"]')
+        if bg(pg) != ref[choice]:
+            fails.append(f"theme: choosing {choice} on a {system} system does not apply it")
+        pg.goto(base + "/products/", wait_until="networkidle")
+        if bg(pg) != ref[choice] or pg.get_attribute(f'.theme-switch [data-theme-choice="{choice}"]', "aria-pressed") != "true":
+            fails.append(f"theme: {choice} is not kept on the next page")
+        pg.add_script_tag(path=axe)
+        r = pg.evaluate("rules => axe.run(document, {runOnly: rules})", rules)
+        for v in r["violations"]:
+            fails.append(f"/products/ chosen {choice} on {system}: axe {v['id']} on {v['nodes'][0]['target']}")
+        pg.click('.theme-switch [data-theme-choice="system"]')
+        pg.reload(wait_until="networkidle")
+        if bg(pg) != ref[system] or pg.get_attribute("html", "data-theme") is not None:
+            fails.append(f"theme: System does not return to the {system} system theme")
+        ctx.close()
     b.close()
 
 if fails:
     print("\n".join(fails))
     sys.exit(1)
-print(f"ok: {len(paths)} pages, 2 themes, 3 widths, keyboard and phone menu")
+print(f"ok: {len(paths)} pages, 2 themes, 3 widths, keyboard, phone menu and theme switch")

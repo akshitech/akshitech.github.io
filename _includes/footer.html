@@ -29,6 +29,12 @@
 {%- if privacy_page or terms_page %}
         <span class="foot-legal-links">{% if privacy_page %}<a href="{{ '/privacy/' | relative_url }}">Privacy policy</a>{% endif %}{% if terms_page %}<a href="{{ '/terms/' | relative_url }}">Terms of use</a>{% endif %}</span>
 {%- endif %}
+        <div class="theme-switch" role="group" aria-label="Colour theme" hidden>
+          <span aria-hidden="true">Theme</span>
+          <button type="button" data-theme-choice="system" aria-pressed="true">System</button>
+          <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+        </div>
 {%- if site.data.contact.cin and site.data.contact.cin != "" %}
         <span>CIN {{ site.data.contact.cin }}</span>
 {%- endif %}

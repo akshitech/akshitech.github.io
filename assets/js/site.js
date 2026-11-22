@@ -27,3 +27,25 @@
   apply();
   narrow.addEventListener("change", apply);
 })();
+
+// Theme: System follows the device; Light or Dark is saved in this browser and applied by the head script on every page.
+(function () {
+  var group = document.querySelector(".theme-switch");
+  if (!group) return;
+  var root = document.documentElement;
+  var buttons = group.querySelectorAll("button");
+  function show(choice) {
+    buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-theme-choice") === choice ? "true" : "false"); });
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var choice = b.getAttribute("data-theme-choice");
+      if (choice === "system") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", choice);
+      try { if (choice === "system") localStorage.removeItem("theme"); else localStorage.setItem("theme", choice); } catch (e) {}
+      show(choice);
+    });
+  });
+  var saved = root.getAttribute("data-theme");
+  show(saved === "light" || saved === "dark" ? saved : "system");
+  group.hidden = false;
+})();
