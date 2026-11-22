@@ -1,12 +1,12 @@
 /* Tokens mirror design/akshi-design-system.pen. Components use these names only. */
 :root {
-  --bg: #FFFFFF;
-  --bg-subtle: #F6F7F9;
+  --bg: #FBFAF7;
+  --bg-subtle: #F1EFE9;
   --surface: #FFFFFF;
   --text: #141C31;
   --muted: #4C566E;
   --subtle: #626B81;
-  --border: #DFE2E8;
+  --border: #E2DFD7;
   --border-strong: #858DA1;
   --primary: #3548B0;
   --primary-hover: #29398F;
@@ -16,7 +16,7 @@
   --danger: #B42345;
   --focus: #4A5FCB;
   --accent: #D84A1B;
-  --grid-line: rgba(20, 28, 49, 0.06);
+  --grid-line: rgba(20, 28, 49, 0.085);
   --shadow-sheet: 0 8px 24px rgba(11, 16, 32, 0.12);
   --display: "Newsreader", "Iowan Old Style", Georgia, serif;
   --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
