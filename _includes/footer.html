@@ -24,21 +24,23 @@
       </div>
       <div class="foot-legal">
         <span>&copy; {{ site.data.contact.legal_name }}</span>
-{%- assign privacy_page = site.pages | where: "url", "/privacy/" | first %}
-{%- assign terms_page = site.pages | where: "url", "/terms/" | first %}
-{%- if privacy_page or terms_page %}
-        <span class="foot-legal-links">{% if privacy_page %}<a href="{{ '/privacy/' | relative_url }}">Privacy policy</a>{% endif %}{% if terms_page %}<a href="{{ '/terms/' | relative_url }}">Terms of use</a>{% endif %}</span>
-{%- endif %}
-        <button type="button" class="theme-toggle" aria-label="Dark theme" aria-pressed="false" hidden>
-          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
-        </button>
 {%- if site.data.contact.cin and site.data.contact.cin != "" %}
         <span>CIN {{ site.data.contact.cin }}</span>
 {%- endif %}
 {%- if site.data.contact.registered_office and site.data.contact.registered_office != "" %}
         <span>Registered office: {{ site.data.contact.registered_office }}</span>
 {%- endif %}
+{%- assign privacy_page = site.pages | where: "url", "/privacy/" | first %}
+{%- assign terms_page = site.pages | where: "url", "/terms/" | first %}
+        <div class="foot-legal-end">
+{%- if privacy_page or terms_page %}
+          <span class="foot-legal-links">{% if privacy_page %}<a href="{{ '/privacy/' | relative_url }}">Privacy policy</a>{% endif %}{% if privacy_page and terms_page %} {% endif %}{% if terms_page %}<a href="{{ '/terms/' | relative_url }}">Terms of use</a>{% endif %}</span>
+{%- endif %}
+          <button type="button" class="theme-toggle" aria-label="Dark theme" aria-pressed="false" hidden>
+            <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </footer>

@@ -79,19 +79,28 @@ with sync_playwright() as p:
         pg.close()
     if ref["light"] == ref["dark"]:
         fails.append("theme: light and dark backgrounds are the same")
-    # The toggle sits at the left edge when the footer row stacks on phones, and on the text line at the right on wide screens.
-    for w in [390, 1440]:
+    # The footer's last row: copyright left, legal links and the toggle right, on one line at 390 px and up;
+    # at 320 px the right group may wrap below but stays at the right edge.
+    for w in [320, 390, 1440]:
         pg = b.new_page(viewport={"width": w, "height": 900})
         pg.goto(base + "/", wait_until="networkidle")
-        left, right, mid = pg.evaluate("""() => {
-            const t = [...document.querySelectorAll(".theme-toggle svg")].find(e => e.getClientRects().length).getBoundingClientRect();
-            const p = document.querySelector(".foot-legal-links a").getBoundingClientRect();
-            const row = document.querySelector(".foot-legal").getBoundingClientRect();
-            return [t.left - p.left, row.right - t.right, (t.top + t.height / 2) - (p.top + p.height / 2)]; }""")
-        if w <= 832 and abs(left) > 4:  # 52rem, the footer breakpoint
-            fails.append(f"theme: toggle is not at the text's left edge at {w}px ({left:.0f}px off)")
-        if w > 832 and (abs(right) > 4 or abs(mid) > 2):
-            fails.append(f"theme: toggle is not on the text line at the right at {w}px")
+        m = pg.evaluate("""() => {
+            const mid = r => r.top + r.height / 2;
+            const t = [...document.querySelectorAll(".theme-toggle svg")].find(e => e.getClientRects().length);
+            const c = document.querySelector(".foot-legal > span");
+            const row = document.querySelector(".foot-legal");
+            if (!t || !c || !row) return null;
+            const tr = t.getBoundingClientRect(), cr = c.getBoundingClientRect(), rr = row.getBoundingClientRect();
+            return {right: rr.right - tr.right, line: mid(tr) - mid(cr), sw: document.documentElement.scrollWidth}; }""")
+        if m is None:
+            fails.append(f"footer: legal row, copyright or theme toggle missing at {w}px")
+        else:
+            if abs(m["right"]) > 4:
+                fails.append(f"footer: theme toggle is {m['right']:.0f}px from the right edge at {w}px")
+            if w >= 390 and abs(m["line"]) > 3:
+                fails.append(f"footer: copyright and theme toggle are not on one line at {w}px")
+            if m["sw"] > w:
+                fails.append(f"footer: page scrolls sideways at {w}px")
         pg.close()
     for system, other in [("light", "dark"), ("dark", "light")]:
         ctx = b.new_context(viewport={"width": 1440, "height": 900}, color_scheme=system)

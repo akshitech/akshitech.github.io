@@ -8,30 +8,26 @@
 .foot-head { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); margin: 0 0 1rem; }
 .foot-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; justify-items: start; }
 .foot-contact { display: grid; gap: 0.6rem; justify-items: start; }
-.foot-legal { margin-top: 3rem; padding-top: 1.5rem; align-items: baseline; border-top: 1px solid var(--border); color: var(--subtle); font-size: 0.8125rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
-.foot-legal-links { display: flex; gap: 1.5rem; margin-left: auto; }
+/* One row at every width: copyright left, legal links and the theme toggle right; it wraps only when it must */
+.foot-legal { margin-top: 3rem; padding-top: 1.5rem; align-items: baseline; border-top: 1px solid var(--border); color: var(--subtle); font-size: 0.8125rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+.foot-legal-end { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.5rem; margin-left: auto; }
+.foot-legal-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
 .foot-legal-links a { color: var(--muted); }
 .foot-legal-links a:hover { color: var(--primary); }
 /* Theme toggle: one icon button, shown only with JavaScript, which is what applies it */
-.theme-toggle { display: inline-flex; align-self: center; align-items: center; justify-content: center; width: 2rem; height: 2rem; margin: -0.4rem -0.4rem -0.4rem 0; padding: 0; color: var(--muted); background: none; border: 0; border-radius: 6px; cursor: pointer; }
+.theme-toggle { display: inline-flex; align-self: center; align-items: center; justify-content: center; width: 2rem; height: 2rem; margin: -0.4rem -0.4rem -0.4rem -0.4rem; padding: 0; color: var(--muted); background: none; border: 0; border-radius: 6px; cursor: pointer; }
 .theme-toggle[hidden] { display: none; }
 .theme-toggle:hover { color: var(--primary); }
 .theme-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .theme-toggle svg { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .theme-toggle[aria-pressed="true"] .icon-sun, .theme-toggle[aria-pressed="false"] .icon-moon { display: none; }
-/* Phones: the two legal links on one line, the copyright line closing the footer below them */
-@media (max-width: 52rem) {
-  .foot-legal { flex-direction: column-reverse; align-items: flex-start; gap: 0.75rem; }
-  .foot-legal-links { margin-left: 0; }
-  /* Stacked rows: the icon lines up with the text's left edge, its padding outside the column */
-  .theme-toggle { align-self: flex-start; margin: -0.4rem 0 -0.4rem -0.4rem; }
-}
 
 @media (max-width: 52rem) {
-  .foot { padding-top: 2.75rem; padding-bottom: 3rem; }
+  .foot { padding-top: 2.5rem; padding-bottom: 2rem; }
   .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 1.5rem; }
   .foot-brand { grid-column: 1 / -1; }
-  .foot-legal { margin-top: 2.5rem; }
+  .foot-legal { margin-top: 2rem; padding-top: 1.25rem; gap: 0.5rem 1.25rem; }
+  .foot-legal-end { gap: 0.5rem 1.25rem; }
 }
 
 @media (max-width: 52rem) {
