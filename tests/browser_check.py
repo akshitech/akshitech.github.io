@@ -103,6 +103,11 @@ with sync_playwright() as p:
             continue
         def pressed():
             return pg.get_attribute(".theme-toggle", "aria-pressed")
+        def settle(js):
+            try:
+                pg.wait_for_function(js, timeout=3000)
+            except Exception:
+                pass  # the assertion that follows reports the failure
         def icon_ok(theme):
             return pg.is_visible(".theme-toggle .icon-moon") == (theme == "dark") and pg.is_visible(".theme-toggle .icon-sun") == (theme == "light")
         if pressed() != ("true" if system == "dark" else "false") or not icon_ok(system):
@@ -128,19 +133,19 @@ with sync_playwright() as p:
             fails.append(f"theme: after toggling back, a reload does not follow the {system} system")
         # Device follows: with no saved choice the page tracks a device change at once.
         pg.emulate_media(color_scheme=other)
-        pg.wait_for_timeout(300)  # the change event is asynchronous
+        settle(f"document.querySelector('.theme-toggle').getAttribute('aria-pressed') === '{'true' if other == 'dark' else 'false'}'")
         if bg(pg) != ref[other] or pressed() != ("true" if other == "dark" else "false"):
             fails.append(f"theme: a device change to {other} is not followed")
         pg.emulate_media(color_scheme=system)
-        pg.wait_for_timeout(300)
+        settle(f"document.querySelector('.theme-toggle').getAttribute('aria-pressed') === '{'true' if system == 'dark' else 'false'}'")
         # A saved choice that the device comes to match is dropped, so the site follows the device again.
         pg.click(".theme-toggle")
         pg.emulate_media(color_scheme=other)
-        pg.wait_for_timeout(300)  # the change event is asynchronous
+        settle("!document.documentElement.hasAttribute('data-theme')")
         if pg.get_attribute("html", "data-theme") is not None or pg.evaluate("localStorage.getItem('theme')") is not None:
             fails.append(f"theme: a saved {other} is kept after the device switched to {other}")
         pg.emulate_media(color_scheme=system)
-        pg.wait_for_timeout(300)
+        settle(f"document.querySelector('.theme-toggle').getAttribute('aria-pressed') === '{'true' if system == 'dark' else 'false'}'")
         if bg(pg) != ref[system]:
             fails.append(f"theme: after the device matched and changed back, the site does not follow it to {system}")
         # A saved choice that already matches the device on load is dropped too.
