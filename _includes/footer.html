@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="foot-legal">
-        <span>&copy; {{ site.time | date: "%Y" }} {{ site.data.contact.legal_name }}</span>
+        <span>&copy; {{ site.data.contact.legal_name }}</span>
 {%- assign privacy_page = site.pages | where: "url", "/privacy/" | first %}
 {%- assign terms_page = site.pages | where: "url", "/terms/" | first %}
 {%- if privacy_page or terms_page %}
