@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Opens every page of the built site in Chrome and fails on:
+"""Opens every page of the built site in Chromium and fails on:
 
 - any axe violation (WCAG 2.2 AA and best practice), light and dark, at 1440, 390 and 320 px
 - sideways scrolling at any of those widths
@@ -7,7 +7,12 @@
 - a phone menu that does not open, close on Escape and return focus
 
 Usage: python tests/browser_check.py BASE_URL AXE_JS
+
+Runs Playwright's own Chromium, the build pinned by the Playwright version, so
+every machine and CI test the same engine (`playwright install chromium` once).
+Set CHROME to a Chrome or Chromium binary to test that one instead.
 """
+import os
 import sys
 from playwright.sync_api import sync_playwright
 
@@ -17,7 +22,7 @@ rules = {"type": "tag", "values": ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa", 
 fails = []
 
 with sync_playwright() as p:
-    b = p.chromium.launch(channel="chrome")
+    b = p.chromium.launch(executable_path=os.environ.get("CHROME") or None)
     for scheme in ["light", "dark"]:
         for w in [1440, 390, 320]:
             pg = b.new_page(viewport={"width": w, "height": 900}, color_scheme=scheme)

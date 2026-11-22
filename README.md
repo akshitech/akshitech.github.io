@@ -38,11 +38,12 @@ CI runs these on every push and pull request; run them before pushing:
 JEKYLL_ENV=production bundle exec jekyll build
 python3 tests/check_built.py
 bundle exec htmlproofer _site --disable-external
+uv run --with playwright==1.55.0 playwright install chromium   # once per machine
 python3 -m http.server 8390 -d _site &   # then, with axe-core 4.10.3 saved locally:
 uv run --with playwright==1.55.0 python tests/browser_check.py http://127.0.0.1:8390 axe.min.js
 ```
 
-`check_built.py` checks titles, descriptions, canonical URLs, the current-page link, workflow counts against the data file, and plain ASCII sources. `browser_check.py` runs axe (WCAG 2.2 AA and best practice) in light and dark at 1440, 390 and 320 px, and checks for sideways scrolling, visible keyboard focus and the phone menu.
+`check_built.py` checks titles, descriptions, canonical URLs, the current-page link, workflow counts against the data file, and plain ASCII sources. `browser_check.py` uses Playwright's pinned Chromium on any OS (set `CHROME` to test another binary). It runs axe (WCAG 2.2 AA and best practice) in light and dark at 1440, 390 and 320 px, and checks for sideways scrolling, visible keyboard focus and the phone menu.
 
 ## Editing
 
