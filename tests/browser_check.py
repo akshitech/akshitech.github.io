@@ -79,28 +79,37 @@ with sync_playwright() as p:
         pg.close()
     if ref["light"] == ref["dark"]:
         fails.append("theme: light and dark backgrounds are the same")
-    # The footer's last row: copyright left, legal links and the toggle right, on one line at 390 px and up;
-    # at 320 px the right group may wrap below but stays at the right edge.
+    # The footer's last row. Wide screens: copyright left, legal links and the toggle right, on one line.
+    # Phones: legal links on the first line; the copyright below with the toggle at the right of its line.
     for w in [320, 390, 1440]:
         pg = b.new_page(viewport={"width": w, "height": 900})
         pg.goto(base + "/", wait_until="networkidle")
         m = pg.evaluate("""() => {
             const mid = r => r.top + r.height / 2;
             const t = [...document.querySelectorAll(".theme-toggle svg")].find(e => e.getClientRects().length);
+            const l = document.querySelector(".foot-legal-links a");
             const c = document.querySelector(".foot-legal > span");
             const row = document.querySelector(".foot-legal");
-            if (!t || !c || !row) return null;
-            const tr = t.getBoundingClientRect(), cr = c.getBoundingClientRect(), rr = row.getBoundingClientRect();
-            return {right: rr.right - tr.right, line: mid(tr) - mid(cr), sw: document.documentElement.scrollWidth}; }""")
+            if (!t || !l || !c || !row) return null;
+            const tr = t.getBoundingClientRect(), lr = l.getBoundingClientRect(), cr = c.getBoundingClientRect(), rr = row.getBoundingClientRect();
+            return {right: rr.right - tr.right, linkLine: mid(tr) - mid(lr), copyLine: mid(tr) - mid(cr),
+                    linkLeft: lr.left - rr.left, copyLeft: cr.left - rr.left, linksAbove: cr.top - lr.bottom,
+                    sw: document.documentElement.scrollWidth}; }""")
         if m is None:
-            fails.append(f"footer: legal row, copyright or theme toggle missing at {w}px")
-        else:
-            if abs(m["right"]) > 4:
-                fails.append(f"footer: theme toggle is {m['right']:.0f}px from the right edge at {w}px")
-            if w >= 390 and abs(m["line"]) > 3:
-                fails.append(f"footer: copyright and theme toggle are not on one line at {w}px")
-            if m["sw"] > w:
-                fails.append(f"footer: page scrolls sideways at {w}px")
+            fails.append(f"footer: legal row, a legal link, copyright or theme toggle missing at {w}px")
+            pg.close()
+            continue
+        if abs(m["right"]) > 4:
+            fails.append(f"footer: theme toggle is {m['right']:.0f}px from the right edge at {w}px")
+        if abs(m["copyLine"]) > 3:
+            fails.append(f"footer: theme toggle is not on the copyright line at {w}px")
+        if w > 832:
+            if abs(m["linkLine"]) > 3:
+                fails.append(f"footer: legal links are not on the copyright line at {w}px")
+        elif abs(m["linkLeft"]) > 1 or abs(m["copyLeft"]) > 1 or m["linksAbove"] < 0:
+            fails.append(f"footer: on phones the links should sit above, and the copyright start its line, at {w}px")
+        if m["sw"] > w:
+            fails.append(f"footer: page scrolls sideways at {w}px")
         pg.close()
     for system, other in [("light", "dark"), ("dark", "light")]:
         ctx = b.new_context(viewport={"width": 1440, "height": 900}, color_scheme=system)
